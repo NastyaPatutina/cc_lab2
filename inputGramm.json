@@ -1,5 +1,5 @@
 {
-	"notTerminal":["X", "Y", "Z"],
+	"notTerminal":["X", "Y", "Z", "A", "B", "C"],
 	"terminal":["0", "1"],
 	"rules":
 	[
@@ -13,7 +13,19 @@
 		},
 		{
 			"res": "Z",
+			"rules":["X0", "11Z", "Y01", "1C"]
+		},
+		{
+			"res": "A",
 			"rules":["X0", "11Z", "Y01", "1"]
+		},
+		{
+			"res": "B",
+			"rules":["X0", "11Z", "Y01", "1"]
+		},
+		{
+			"res": "C",
+			"rules":["0", "1"]
 		}
 	],
 	"start": "Z"

@@ -15,6 +15,10 @@ public:
     }
 
     NotTerminal() {};
+
+    bool isTerm(){
+        return false;
+    }
 };
 
 

@@ -15,6 +15,10 @@ public:
     }
 
     Terminal() {}
+
+    bool isTerm(){
+        return true;
+    }
 };
 
 

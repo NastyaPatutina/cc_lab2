@@ -29,12 +29,12 @@ void Gramatic::setRules(const std::list<Equation*> &rules) {
     Gramatic::rules = rules;
 }
 
-const NotTerminal &Gramatic::getStartSymbol() const {
+NotTerminal* Gramatic::getStartSymbol() {
     return startSymbol;
 }
 
-void Gramatic::setStartSymbol(const NotTerminal &startSymbol) {
-    Gramatic::startSymbol = startSymbol;
+void Gramatic::setStartSymbol(NotTerminal* startSymbol) {
+    this->startSymbol = startSymbol;
 }
 
 Terminal* Gramatic::getTerminal(std::string termName) {
@@ -97,5 +97,5 @@ void Gramatic::printGramm() {
         std::cout << "  " << (*i)->toString() << std::endl;
     }
 
-    std::cout << "Start symbol:" << this->startSymbol.getName() << std::endl;
+    std::cout << "Start symbol:" << this->startSymbol->getName() << std::endl;
 }

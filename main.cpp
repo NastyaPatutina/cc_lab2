@@ -12,6 +12,7 @@
 #include "gram/Equation.h"
 #include "gram/Gramatic.h"
 #include "elimination/LeftFactoringElimination.h"
+#include "elimination/DeletingUnreachableCharacters.h"
 
 using json = nlohmann::json;
 
@@ -81,20 +82,34 @@ Gramatic* fill_gramm(json j) {
     }
     gm->setRules(grammRules);
     NotTerminal* notTerm = gm->getNotTerminal(j["start"]);
-    gm->setStartSymbol(*notTerm);
+    gm->setStartSymbol(notTerm);
     return gm;
 }
 void testing(std::list<std::string> list){
     std::list<std::string>::iterator i;
     for (i = list.begin(); i != list.end(); ++i) {
         std::ifstream infile("../" + *i + ".json");
+        std::cout << "\n\n----------------INPUT GRAMM----------------\n";
         json j = json::parse(infile);
-        Gramatic *gm = fill_gramm(j);
+        Gramatic* gm = fill_gramm(j);
+        gm->printGramm();
+
+        std::cout << "\n\n----------------Elimination----------------\n";
+        LeftFactoringElimination* lf = new LeftFactoringElimination(gm->getRules());
+        Gramatic* new_gm = new Gramatic(*gm);
+        new_gm->setRules(lf->get_left_factor_rules());
+        new_gm->printGramm();
+
+        std::cout << "\n\n----------------Unreachable Characters----------------\n";
+        DeletingUnreachableCharacters* duc = new DeletingUnreachableCharacters(gm);
+        Gramatic* norm_gram = new Gramatic(*gm);
+        norm_gram->setRules(duc->get_norm_rules());
+        norm_gram->printGramm();
     }
 }
 
 int main(int argc, char *argv[]) {
-    std::string file_name = "../inputGramm.json";
+    std::string file_name = "../inputGramm2.json";
     if (argc==2){
         if (strcmp(argv[1], "--test") == 0){
             std::list<std::string> test_names {"inputGramm", "inputGramm2", "inputGramm3", "inputGramm4"};
@@ -104,13 +119,23 @@ int main(int argc, char *argv[]) {
             file_name = argv[1];
         }
     }
+    std::cout << "\n\n----------------INPUT GRAMM----------------\n";
     std::ifstream infile(file_name);
     json j = json::parse(infile);
     Gramatic* gm = fill_gramm(j);
     gm->printGramm();
+
+    std::cout << "\n\n----------------Elimination----------------\n";
     LeftFactoringElimination* lf = new LeftFactoringElimination(gm->getRules());
     Gramatic* new_gm = new Gramatic(*gm);
     new_gm->setRules(lf->get_left_factor_rules());
     new_gm->printGramm();
+
+    std::cout << "\n\n----------------Unreachable Characters----------------\n";
+    DeletingUnreachableCharacters* duc = new DeletingUnreachableCharacters(gm);
+    Gramatic* norm_gram = new Gramatic(*gm);
+    norm_gram->setRules(duc->get_norm_rules());
+    norm_gram->printGramm();
+
     return 0;
 }

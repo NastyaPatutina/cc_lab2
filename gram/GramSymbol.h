@@ -22,6 +22,8 @@ public:
     void setName(const std::string &name) {
         GramSymbol::name = name;
     }
+
+    virtual bool isTerm() = 0;
 };
 
 

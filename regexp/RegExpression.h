@@ -6,6 +6,7 @@
 #define LAB1_REGEXPRESSION_H
 
 #include "../gram/Terminal.h"
+#include "../gram/NotTerminal.h"
 #include <list>
 
 
@@ -66,6 +67,44 @@ public:
 
             return res;
         }
+
+        std::list<Terminal*> getTerminals() {
+            std::list<Terminal*> res;
+            std::list<RegExpression*>::iterator i;
+
+            if (regExpressions.size() > 0) {
+                for (i = regExpressions.begin(); i != regExpressions.end(); ++i) {
+                    res.merge((*i)->getTerminals());
+                }
+                return res;
+            }
+
+            if (body->getName() != "")
+                if (body->isTerm())
+                    res.push_back((Terminal*)body);
+
+
+            return res;
+        }
+
+        std::list<NotTerminal*> getNotTerminals() {
+            std::list<NotTerminal*> res;
+            std::list<RegExpression*>::iterator i;
+
+            if (regExpressions.size() > 0) {
+                for (i = regExpressions.begin(); i != regExpressions.end(); ++i) {
+                    res.merge((*i)->getNotTerminals());
+                }
+                return res;
+            }
+
+            if (body->getName() != "")
+                if (!body->isTerm())
+                    res.push_back((NotTerminal*)body);
+
+
+            return res;
+        }
     };
     RegExpression();
     RegExpression(GramSymbol* terminal);
@@ -80,6 +119,8 @@ public:
     std::list<RegExpression*> getNodes();
     void removeNode(RegExpression* regExpression);
     std::list<RegExpression *> getOrNodes();
+    std::list<Terminal*> getTerminals();
+    std::list<NotTerminal*> getNotTerminals();
 
 private:
     Item regExpBody;

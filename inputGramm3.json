@@ -1,11 +1,23 @@
 {
-	"notTerminal":["X"],
+	"notTerminal":["X", "A", "B", "C"],
 	"terminal":["0", "1"],
 	"rules":
 	[
 		{
 			"res": "X",
-			"rules":["0X", "X1", "X0"]
+			"rules":["0X", "X1", "X0", "B"]
+		},
+		{
+			"res": "A",
+			"rules":["X0", "11X", "X01", "1"]
+		},
+		{
+			"res": "B",
+			"rules":["X0", "11X", "A01", "B1"]
+		},
+		{
+			"res": "C",
+			"rules":["0", "1"]
 		}
 	],
 	"start": "X"

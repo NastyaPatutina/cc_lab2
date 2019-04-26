@@ -16,7 +16,7 @@ private:
     std::list <Terminal> terminals;
     std::list <NotTerminal> notTerminals;
     std::list <Equation*> rules;
-    NotTerminal startSymbol;
+    NotTerminal* startSymbol;
 
 public:
     Gramatic();
@@ -33,9 +33,9 @@ public:
 
     void setRules(const std::list<Equation*> &rules);
 
-    const NotTerminal &getStartSymbol() const;
+    NotTerminal* getStartSymbol();
 
-    void setStartSymbol(const NotTerminal &startSymbol);
+    void setStartSymbol(NotTerminal* startSymbol);
 
     Terminal* getTerminal(std::string termName);
 

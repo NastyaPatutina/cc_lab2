@@ -48,9 +48,7 @@ void RegExpression::addSymbol(GramSymbol* terminal) {
 
 std::string RegExpression::toString() {
     std::string res = "";
-    if (this != NULL) {
-        res += regExpBody.toString();
-    }
+    res += regExpBody.toString();
     return res;
 }
 
@@ -92,4 +90,12 @@ std::list<RegExpression*> RegExpression::getOrNodes() {
 
 void RegExpression::removeNode(RegExpression* regExpression) {
     this->regExpBody.regExpressions.remove(regExpression);
+}
+
+std::list<NotTerminal *> RegExpression::getNotTerminals() {
+    return this->regExpBody.getNotTerminals();
+}
+
+std::list<Terminal *> RegExpression::getTerminals() {
+    return this->regExpBody.getTerminals();
 }
